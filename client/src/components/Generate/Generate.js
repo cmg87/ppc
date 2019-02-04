@@ -9,7 +9,7 @@ class Generate extends Component {
           className="btn btn-primary"
           data-toggle="modal"
           data-target="#generate">
-          Generate Factory
+          Generate
         </button>
       </div>
     );

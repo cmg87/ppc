@@ -4,31 +4,19 @@ export default class Modal extends Component {
   render() {
     return (
       //    Modal
-      <div
-        class="modal fade"
-        id="generate"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+      <div class="modal fade" id="generate" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+              <h5 class="modal-title" id="Generate">
                 Generate Factory
               </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button type="button" class="close" data-dismiss="modal" />
             </div>
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <label for="exampleFormControlInput1">Factory Name</label>
+                  <label>Factory Name</label>
                   <input
                     onChange={this.props.handleInput}
                     type="email"

@@ -13,12 +13,21 @@ export default {
 
   deleteFactory: data => {
     let body = {
-      id: data.id
+      id: data
     };
-    axios.delete("/api/deleteFactory", body);
+    axios.patch("/api/deleteFactory", body);
   },
 
   deleteAll: data => {
     axios.delete("/api/deleteAll");
+  },
+
+  updateFactory: data => {
+    let body = {
+      id: data.id,
+      name: data.name,
+      children: data.children
+    };
+    axios.put("/api/updateFactory", body);
   }
 };

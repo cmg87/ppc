@@ -8,7 +8,12 @@ class Factory extends Component {
         {this.props.factories.map(factories => {
           return (
             <li>
-              <i className="fa fa-folder fa-lg" id={factories._id}>
+              <i
+                className="fa fa-folder fa-lg"
+                data-toggle="modal"
+                data-target="#edit"
+                id={factories._id}
+                onClick={this.props.handleID}>
                 <span>{factories.FactoryName}</span>
               </i>
               <Child factories={factories} />
