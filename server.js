@@ -26,37 +26,17 @@ app.use(bodyParser.json());
 //Uses API routes for routing
 app.use(routes);
 
-// const Stream = new EventEmitter();
-// app.get("/events", function(request, response) {
-//   response.writeHead(200, {
-//     "Content-Type": "text/event-stream",
-//     "Cache-Control": "no-cache",
-//     Connection: "keep-alive"
-//   });
-
-//   Stream.on("message", function(event, data) {
-//     response.write(
-//       "event: " +
-//         String(event) +
-//         "\n" +
-//         "data: " +
-//         JSON.stringify(data) +
-//         "\n\n"
-//     );
-//   });
-// });
-
-// app.get("/events", (req, res) => {
-//   res.set({
-//     "Content-Type": "text/event-stream",
-//     "Cache-Control": "no-cache",
-//     Connection: "keep-alive"
-//   });
-//   app.on("message", data => {
-//     res.write(`event: message\n`);
-//     res.write(`data: ${JSON.stringify(data)}\n\n`);
-//   });
-// });
+app.get("/events", (req, res) => {
+  res.set({
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache",
+    Connection: "keep-alive"
+  });
+  app.on("message", data => {
+    res.write(`event: message\n`);
+    res.write(`data: ${JSON.stringify(data)}\n\n`);
+  });
+});
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));

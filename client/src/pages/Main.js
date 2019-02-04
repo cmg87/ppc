@@ -27,7 +27,7 @@ class Main extends Component {
       id: ""
     };
 
-    this.eventSource = new EventSource("/events");
+    // this.eventSource = new EventSource("/events");
   }
 
   handleGenerate = (min, max) => {
@@ -105,21 +105,35 @@ class Main extends Component {
       .then(res => this.setState({ factories: res.data }))
       .catch(err => console.log(err));
 
-    this.eventSource.onmessage = e => {
-      console.log(e.data);
-      // this.setState({ factories: JSON.parse(e.data) });
-    };
+    // this.eventSource.onmessage = e => {
+    //   console.log(e.data);
+    // this.setState({ factories: JSON.parse(e.data) });
+    // Connect EventSource to backend route
+    const source = new EventSource("/events");
+
+    // Event listener for the open event
+    source.addEventListener(
+      "open",
+      function() {
+        console.log("open");
+      },
+      false
+    );
+
+    // Event listener for the message event
+    source.addEventListener(
+      "message",
+      e => {
+        console.log(e.data);
+      },
+      false
+    );
   }
 
   componentDidUpdate() {
-    API.getFactory()
-      .then(res => this.setState({ factories: res.data }))
-      .catch(err => console.log(err));
-    // this.eventSource.addEventListener("message", e => {
-    //   this.setState({ factories: JSON.parse(e.data) });
-    // });
-    // this.eventSource.onmessage = e =>
-    //   this.setState({ factories: JSON.parse(e.data) });
+    // API.getFactory()
+    //   .then(res => this.setState({ factories: res.data }))
+    //   .catch(err => console.log(err));
   }
 
   render() {

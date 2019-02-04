@@ -2,18 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Factory = require("../models/schema");
 
-router.get("/events", (req, res) => {
-  res.set({
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    Connection: "keep-alive"
-  });
-  router.on("message", data => {
-    res.write(`event: message\n`);
-    res.write(`data: ${JSON.stringify(data)}\n\n`);
-  });
-});
-
 //Post, Create Factory
 router.post("/api/createFactory", (req, res) => {
   if (req.body.children.length !== 0) {
@@ -22,8 +10,9 @@ router.post("/api/createFactory", (req, res) => {
       Children: req.body.children
     };
     Factory.create(newFactory)
-      .then(data => res.json(data))
+      .then(res => app.emit("message", { title: "message" }))
       .catch(err => res.send(err));
+    // .then(data => res.json(data))
   } else {
     res.json({ Error: "Must have at least one Child Node" });
   }
