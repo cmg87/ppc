@@ -26,8 +26,6 @@ class Main extends Component {
       numberToGenerate: 1,
       id: ""
     };
-
-    // this.eventSource = new EventSource("/events");
   }
 
   handleGenerate = (min, max) => {
@@ -105,35 +103,17 @@ class Main extends Component {
       .then(res => this.setState({ factories: res.data }))
       .catch(err => console.log(err));
 
-    // this.eventSource.onmessage = e => {
-    //   console.log(e.data);
-    // this.setState({ factories: JSON.parse(e.data) });
-    // Connect EventSource to backend route
-    const source = new EventSource("/events");
-
-    // Event listener for the open event
-    source.addEventListener(
-      "open",
-      function() {
-        console.log("open");
-      },
-      false
-    );
-
-    // Event listener for the message event
-    source.addEventListener(
-      "message",
-      e => {
-        console.log(e.data);
-      },
-      false
-    );
+    const es = new EventSource("/events");
+    es.addEventListener("message", function(event) {
+      console.log(event.data);
+      this.setState({ factories: JSON.parse(event.data) });
+    });
   }
 
   componentDidUpdate() {
-    // API.getFactory()
-    //   .then(res => this.setState({ factories: res.data }))
-    //   .catch(err => console.log(err));
+    API.getFactory()
+      .then(res => this.setState({ factories: res.data }))
+      .catch(err => console.log(err));
   }
 
   render() {

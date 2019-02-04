@@ -10,9 +10,8 @@ router.post("/api/createFactory", (req, res) => {
       Children: req.body.children
     };
     Factory.create(newFactory)
-      .then(res => app.emit("message", { title: "message" }))
+      .then(data => res.json(data))
       .catch(err => res.send(err));
-    // .then(data => res.json(data))
   } else {
     res.json({ Error: "Must have at least one Child Node" });
   }

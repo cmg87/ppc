@@ -5,7 +5,6 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const path = require("path");
 const routes = require("./routes/api");
-const EventEmitter = require("events");
 
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/ppc", {
@@ -16,8 +15,6 @@ const db = mongoose.connection;
 
 //Serve Static Files from react App
 app.use(express.static(path.join(__dirname, "client/build")));
-// Set Static Folder dev
-// app.use(express.static(path.join(__dirname, "public")));
 
 // BodyParser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,18 +22,6 @@ app.use(bodyParser.json());
 
 //Uses API routes for routing
 app.use(routes);
-
-app.get("/events", (req, res) => {
-  res.set({
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    Connection: "keep-alive"
-  });
-  app.on("message", data => {
-    res.write(`event: message\n`);
-    res.write(`data: ${JSON.stringify(data)}\n\n`);
-  });
-});
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
