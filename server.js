@@ -14,7 +14,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/ppc", {
 const db = mongoose.connection;
 
 //Serve Static Files from react App
-app.use(express.static(path.join(__dirname, "/build")));
+app.use(express.static(path.join(__dirname, "client/build")));
 // Set Static Folder dev
 // app.use(express.static(path.join(__dirname, "public")));
 
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(routes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./build/index.html"));
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 // Start the API server
